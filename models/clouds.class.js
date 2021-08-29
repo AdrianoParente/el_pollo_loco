@@ -1,9 +1,11 @@
-class Clouds extends MoveableObject{
-
-    
+class Clouds extends MoveableObject {
+    y = 20;
+    width = 500;
+    height = 250;
     constructor() {
         super().loadImage('img/5.Fondo/Capas/4.nubes/1.png')
-        this.y = 50;
-        this.x = 200 + Math.random() * 500;
+
+        this.x = Math.random() * 500;
+
     }
 }
