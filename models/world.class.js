@@ -6,8 +6,15 @@ class World {
     ctx;
     keyboard;
     camera_x = -100;
-    statusBar_life = new StatusBarObject();
+    statusBar_life = new StatusBarObject(30, 0, 100, 1);
+    statusBar_bottle = new StatusBarObject(30, 40, 1, 2);
+    statusBar_money = new StatusBarObject(30, 80, 1, 3);
+    statusBar_life_enemy = new StatusBarObject(3700, 0, 100, 4);
     throwableobjects = [];
+    collectedBottles = [];
+    collectedCoins = [];
+    
+
 
 
     constructor(canvas, keyboard) {
@@ -29,23 +36,59 @@ class World {
         setInterval(() => {
             this.checkCollisions();
             this.checkThrowObjects();
-        }, 200);
+        }, 1000 / 25);
     }
 
-checkThrowObjects(){
-    if(this.keyboard.D){
-        let bottle = new ThrowableObject(this.character.x + 100 , this.character.y + 100);
-        this.throwableobjects.push(bottle)
+    checkThrowObjects() {
+        if (this.keyboard.D && this.collectedBottles.length > 0) {
+            let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100);
+            this.throwableobjects.push(bottle);
+            this.collectedBottles.pop();
 
+        }
     }
-}
     checkCollisions() {
         this.level.enemies.forEach((enemy) => {
             if (this.character.isColliding(enemy)) {
                 this.character.hit();
-                this.statusBar_life.setPercentage(this.character.energy);
+                if (this.character.isDead()) {
+                    alert('Game Over');
+                    
+                } else {
+                    this.statusBar_life.setPercentage(this.character.energy);
+                    console.log(this.character.energy);
+                }
+            }
+
+        });
+        this.level.bottles.forEach((bottle) => {
+            if (this.character.isColliding(bottle)) {
+                this.collectedBottles.push(bottle);
+                this.level.bottles.splice(bottle, 1);
+                this.statusBar_bottle.setPercentage(this.collectedBottles.length * 5);
+            }
+
+        });
+        this.level.coins.forEach((coin) => {
+            if (this.character.isColliding(coin)) {
+                this.collectedCoins.push(coin);
+                this.level.coins.splice(coin, 1);
+                this.statusBar_money.setPercentage(this.collectedCoins.length * 5);
+               
             }
         });
+
+        this.throwableobjects.forEach((tao) => {
+            this.level.enemies.forEach((enemy) => {
+                if (tao.isColliding(enemy) && (enemy instanceof Endboss)) {
+                    console.log('Treffer EndBoss')
+                    enemy.hit();
+                    enemy.isHurt();
+                    
+                }
+            })
+        })
+
     }
 
     draw() {
@@ -56,10 +99,15 @@ checkThrowObjects(){
 
         this.ctx.translate(-this.camera_x, 0);
         this.addToMap(this.statusBar_life);
+        this.addToMap(this.statusBar_bottle);
+        this.addToMap(this.statusBar_money)
         this.ctx.translate(this.camera_x, 0);
 
+        this.addToMap(this.statusBar_life_enemy);
+        this.addObjectsToMap(this.throwableobjects);
         this.addObjectsToMap(this.level.enemies);
-        this.addObjectsToMap(this.throwableobjects)
+        this.addObjectsToMap(this.level.coins);
+        this.addObjectsToMap(this.level.bottles);
         this.addObjectsToMap(this.level.clouds);
         this.ctx.translate(-this.camera_x, 0);
         let self = this;
@@ -77,11 +125,11 @@ checkThrowObjects(){
         }
         mo.draw(this.ctx)
 
-        this.ctx.beginPath();
-        this.ctx.lineWidth = '5';
-        this.ctx.strokeStyle = 'blue';
-        this.ctx.rect(mo.x, mo.y, mo.width, mo.height);
-        this.ctx.stroke();
+        /*   this.ctx.beginPath();
+           this.ctx.lineWidth = '5';
+           this.ctx.strokeStyle = 'blue';
+           this.ctx.rect(mo.x, mo.y, mo.width, mo.height);
+           this.ctx.stroke();*/
 
         if (mo.otherDirection) {
             mo.x = mo.x * -1;

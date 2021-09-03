@@ -23,6 +23,7 @@ class DrawableObject {
     }
 
     draw(ctx) {
+        //console.log(this.img);
         ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
     };
 

@@ -12,20 +12,43 @@ class Endboss extends MoveableObject {
         'img/4.Secuencias_Enemy_gigantón-Doña_Gallinota-/2.Ateción-ataque/1.Alerta/G10.png',
         'img/4.Secuencias_Enemy_gigantón-Doña_Gallinota-/2.Ateción-ataque/1.Alerta/G11.png',
         'img/4.Secuencias_Enemy_gigantón-Doña_Gallinota-/2.Ateción-ataque/1.Alerta/G12.png',
-    ]
+    ];
+
+    IMAGES_HURT = [
+        'img/4.Secuencias_Enemy_gigantón-Doña_Gallinota-/3.Herida/G21.png',
+        'img/4.Secuencias_Enemy_gigantón-Doña_Gallinota-/3.Herida/G22.png',
+        'img/4.Secuencias_Enemy_gigantón-Doña_Gallinota-/3.Herida/G23.png'
+
+    ];
+
+    IMAGES_DEATH = [
+        'img/4.Secuencias_Enemy_gigantón-Doña_Gallinota-/4.Muerte/G24.png',
+        'img/4.Secuencias_Enemy_gigantón-Doña_Gallinota-/4.Muerte/G25.png',
+        'img/4.Secuencias_Enemy_gigantón-Doña_Gallinota-/4.Muerte/G26.png'
+    ];
 
 
-    constructor(){
+    constructor() {
         super().loadImage(this.IMAGES_WALKING[0]);
         this.loadImages(this.IMAGES_WALKING);
-        this.x = 700;
+        this.loadImages(this.IMAGES_DEATH);
+        this.loadImages(this.IMAGES_HURT);
+        this.x = 3700;
         this.animate();
     }
 
-    animate(){
+    animate() {
         setInterval(() => {
-            this.playAnimation(this.IMAGES_WALKING);
-            
+            if (this.isDead()) {
+                this.playAnimation(this.IMAGES_DEATH);
+            }else if (this.isHurt()) {
+                this.playAnimation(this.IMAGES_HURT);
+            }
+            else  {
+                this.playAnimation(this.IMAGES_WALKING);
+            }
+
+
         }, 200);
     }
 }
