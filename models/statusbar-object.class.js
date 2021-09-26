@@ -32,13 +32,15 @@ class StatusBarObject extends DrawableObject {
     ];
 
     IMAGES4 = [
-        'img/7.Marcadores/Barra/Marcador moneda/azul/0_.png',
-        'img/7.Marcadores/Barra/Marcador moneda/azul/20_.png',
-        'img/7.Marcadores/Barra/Marcador moneda/azul/40_.png',
-        'img/7.Marcadores/Barra/Marcador moneda/azul/60_.png',
-        'img/7.Marcadores/Barra/Marcador moneda/azul/80_.png',
-        'img/7.Marcadores/Barra/Marcador moneda/azul/100_.png',
+
+        'img/7.Marcadores/Barra/Marcador vida/verde/0_.png',
+        'img/7.Marcadores/Barra/Marcador vida/verde/20_.png',
+        'img/7.Marcadores/Barra/Marcador vida/verde/40_.png',
+        'img/7.Marcadores/Barra/Marcador vida/verde/60_.png',
+        'img/7.Marcadores/Barra/Marcador vida/verde/80_.png',
+        'img/7.Marcadores/Barra/Marcador vida/verde/100_.png',
     ];
+
 
     percentage;
     image = [];
@@ -95,5 +97,7 @@ class StatusBarObject extends DrawableObject {
         } else if (this.percentage > 0) {
             return 0;
         }
+        else
+         return 0;
     }
 }

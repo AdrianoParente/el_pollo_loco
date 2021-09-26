@@ -1,18 +1,17 @@
 class Clouds extends MoveableObject {
 
-    y = 20;
-    width = 500;
-    height = 250;
-   
-    constructor() {
-        super().loadImage('img/5.Fondo/Capas/4.nubes/1.png')
+  y = 20;
+  width = 500;
+  height = 250;
 
-        this.x = Math.random() * 500;
-        this.animate();
-    }
-    animate() {
+  constructor(x) {
+    super().loadImage('img/5.Fondo/Capas/4.nubes/1.png')
+    this.x = x;
+    this.animate();
+  }
+  animate() {
+    setInterval(() => {
       this.moveLeft();
-    }
-
-   
+    }, 50);
+  }
 }

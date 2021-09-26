@@ -13,7 +13,7 @@ class World {
     throwableobjects = [];
     collectedBottles = [];
     collectedCoins = [];
-    
+
 
 
 
@@ -35,8 +35,12 @@ class World {
     run() {
         setInterval(() => {
             this.checkCollisions();
-            this.checkThrowObjects();
+
         }, 1000 / 25);
+        setInterval(() => {
+            this.checkCollisions();
+            this.checkThrowObjects();
+        }, 200);
     }
 
     checkThrowObjects() {
@@ -44,7 +48,7 @@ class World {
             let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100);
             this.throwableobjects.push(bottle);
             this.collectedBottles.pop();
-
+            this.statusBar_bottle.setPercentage(this.collectedBottles.length * 5);
         }
     }
     checkCollisions() {
@@ -52,8 +56,21 @@ class World {
             if (this.character.isColliding(enemy)) {
                 this.character.hit();
                 if (this.character.isDead()) {
-                    alert('Game Over');
-                    
+                    setTimeout(function () {
+                        document.getElementById('startScreen').style.display = 'flex';
+                        document.getElementById('background-image').style.display = 'none';
+                        document.getElementById('canvas').style.display = 'none';
+                        document.getElementById('backgroundImageGameOver').style.display = 'none';
+                        document.getElementById('backgroundImageYouLost').style.display = 'flex';
+                        setTimeout(function () {
+                            document.getElementById('backgroundImageGameOver').style.display = 'flex';
+                            document.getElementById('backgroundImageYouLost').style.display = 'none';
+
+                        }, 2000);
+                    }, 3000);
+
+
+
                 } else {
                     this.statusBar_life.setPercentage(this.character.energy);
                     console.log(this.character.energy);
@@ -74,7 +91,7 @@ class World {
                 this.collectedCoins.push(coin);
                 this.level.coins.splice(coin, 1);
                 this.statusBar_money.setPercentage(this.collectedCoins.length * 5);
-               
+
             }
         });
 
@@ -83,32 +100,42 @@ class World {
                 if (tao.isColliding(enemy) && (enemy instanceof Endboss)) {
                     console.log('Treffer EndBoss')
                     enemy.hit();
-                    enemy.isHurt();
-                    
+                    if (enemy.isDead()) {
+                        setTimeout(function () {
+                            document.getElementById('startScreen').style.display = 'flex';
+                            document.getElementById('background-image').style.display = 'none';
+                            document.getElementById('backgroundImageGameOver').style.display = 'flex';
+                            document.getElementById('canvas').style.display = 'none';
+                        }, 3000);
+
+                    } else {
+
+                        enemy.isHurt();
+                        this.statusBar_life_enemy.setPercentage(enemy.energy);
+
+                    }
                 }
             })
-        })
-
-    }
-
+        });
+    };
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.ctx.translate(this.camera_x, 0);
         this.addObjectsToMap(this.level.backgroundobjects);
         this.addToMap(this.character);
+        this.addObjectsToMap(this.throwableobjects);
+        this.addObjectsToMap(this.level.enemies);
+        this.addObjectsToMap(this.level.coins);
+        this.addObjectsToMap(this.level.bottles);
+        this.addObjectsToMap(this.level.clouds);
+        this.addToMap(this.statusBar_life_enemy);
 
         this.ctx.translate(-this.camera_x, 0);
         this.addToMap(this.statusBar_life);
         this.addToMap(this.statusBar_bottle);
         this.addToMap(this.statusBar_money)
         this.ctx.translate(this.camera_x, 0);
-
-        this.addToMap(this.statusBar_life_enemy);
-        this.addObjectsToMap(this.throwableobjects);
-        this.addObjectsToMap(this.level.enemies);
-        this.addObjectsToMap(this.level.coins);
-        this.addObjectsToMap(this.level.bottles);
-        this.addObjectsToMap(this.level.clouds);
+        
         this.ctx.translate(-this.camera_x, 0);
         let self = this;
         requestAnimationFrame(function () {

@@ -1,9 +1,121 @@
-body{
+body {
+    margin: 0;
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
+    height: 100vh;
 }
 
-canvas{
+.backgroundContainer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url('img/5.Fondo/Completo.png');
+    background-position: 50% 75%;
+    height: 100vh;
+    width: 100wh;
+    opacity: 0.6;
+    z-index: 0;
+}
+
+#startScreenContainer {
+    width: 720px;
+    height: 480px;
+    z-index: 1;
+    margin-bottom: 10px;
+}
+
+#background-image {
+    position: absolute;
+    width: 720px;
+    height: 480px;
+}
+
+#backgroundImageGameOver {
+    position: absolute;
+    width: 720px;
+    height: 480px;
+    display: none;
+}
+
+#backgroundImageYouLost {
+    position: absolute;
+    width: 720px;
+    height: 480px;
+    display: none;
+}
+
+#controlElements {
+    position: absolute;
+    width: 720px;
+    height: 480px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-items: center;
+}
+
+.controls {
+    height: 100%;
+    width: 100%;
+}
+
+#startScreen {
+    position: relative;
+    width: 720px;
+    height: 480px;
+}
+
+canvas {
     background-color: black;
+    display: none;
+}
+
+.navBar {
+    margin-top: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 720px;
+    height: 60px;
+    font-family: 'Gluten', cursive;
+    font-size: 30px;
+    color: black;
+    z-index: 2;
+}
+
+#control {
+    padding: 10px;
+    border-radius: 10px;
+    background-color: darksalmon;
+}
+
+#control:hover {
+    cursor: pointer;
+    background-color: chocolate;
+}
+
+#fullscreen {
+    padding: 10px;
+    border-radius: 10px;
+    background-color: darkseagreen;
+}
+
+#fullscreen:hover {
+    cursor: pointer;
+    background-color: darkcyan;
+}
+
+#start {
+    padding: 10px;
+    border-radius: 10px;
+    background-color: khaki;
+}
+
+#start:hover {
+    cursor: pointer;
+    background-color: darkred;
 }

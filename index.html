@@ -6,6 +6,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Gluten:wght@100;200;300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
     <script src="models/drawable-object.class.js"></script>
     <script src="models/statusbar-object.class.js"></script>
     <script src="models/world.class.js"></script>
@@ -21,19 +25,57 @@
     <script src="models/coin.class.js"></script>
     <script src="models/bottle.class.js"></script>
     <script src="models/level.class.js"></script>
-
-
     <script src="level/level1.js"></script>
     <script src="js/game.js"></script>
 
-    <title>El Pollo Loco
+    <title>El Pollo Loco</title>
 
-    </title>
 </head>
 
-<body onload="init()">
-    <h1>El Pollo Loco</h1>
-    <canvas id="canvas" width="720" height="480"></canvas>
+<body>
+    <div class="backgroundContainer"></div>
+    <div id="startScreenContainer">
+        <div id="startScreen">
+            <img id="background-image" src="img/9.Intro _ Outro Image/Start Screen/Opción2.png">
+            <img id="backgroundImageGameOver" src="img/9.Intro _ Outro Image/_Game over_ screen/3.Game over.png">
+            <img id="backgroundImageYouLost" src="img/9.Intro _ Outro Image/_Game over_ screen/1.you lost.png">
+            <div id = "controlElements">
+                <div class = "controls">
+                    <img>
+                    <img>
+                    <div>
+                        right & left
+                    </div>
+                </div>
+                <div class = "controls">
+                    <img>
+                    <div>
+                        jump
+                    </div>
+                </div>
+                <div class = "controls">
+                    <img>
+                    <div>
+                        throw bottle
+                    </div>
+                </div>
+            </div>
+        </div>
+        <canvas id="canvas" width="720" height="480"></canvas>
+    </div>
+
+    <div class="navBar">
+        <div id="control" onclick = "showControl()">
+            Control
+        </div>
+        <div id="fullscreen" onclick="showFullScreen()">
+            Fullscreen
+        </div>
+        <div id="start" onclick="start()">
+            Start
+        </div>
+    </div>
+
 </body>
 
 </html>
