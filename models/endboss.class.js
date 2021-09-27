@@ -3,6 +3,8 @@ class Endboss extends MoveableObject {
     height = 400;
     width = 250;
     y = 50;
+    hurt_chicken = new Audio('audio/hurt_chicken.mp3');
+
     IMAGES_WALKING = [
         'img/4.Secuencias_Enemy_gigantón-Doña_Gallinota-/2.Ateción-ataque/1.Alerta/G5.png',
         'img/4.Secuencias_Enemy_gigantón-Doña_Gallinota-/2.Ateción-ataque/1.Alerta/G6.png',
@@ -27,7 +29,6 @@ class Endboss extends MoveableObject {
         'img/4.Secuencias_Enemy_gigantón-Doña_Gallinota-/4.Muerte/G26.png'
     ];
 
-
     constructor() {
         super().loadImage(this.IMAGES_WALKING[0]);
         this.loadImages(this.IMAGES_WALKING);
@@ -35,20 +36,22 @@ class Endboss extends MoveableObject {
         this.loadImages(this.IMAGES_HURT);
         this.x = 3700;
         this.animate();
-    }
+    };
 
+    /**
+     * animates endboss if he is hurt, death or walking
+     */
     animate() {
         setInterval(() => {
             if (this.isDead()) {
                 this.playAnimation(this.IMAGES_DEATH);
-            }else if (this.isHurt()) {
+            } else if (this.isHurt()) {
                 this.playAnimation(this.IMAGES_HURT);
+                this.hurt_chicken.play();
             }
-            else  {
+            else {
                 this.playAnimation(this.IMAGES_WALKING);
             }
-
-
         }, 200);
-    }
+    };
 }

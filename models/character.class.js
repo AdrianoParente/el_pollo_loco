@@ -43,7 +43,10 @@ class Character extends MoveableObject {
     ];
 
     world;
-    walking_sound = new Audio('audio/walking_sound.mp3')
+    walking_sound = new Audio('audio/walking_sound.mp3');
+    jump_sound = new Audio('audio/jump.mp3');
+
+    hurt_character = new Audio('audio/hurt_character.mp3');
 
     constructor() {
         super().loadImage('img/2.Secuencias_Personaje-Pepe-corrección/2.Secuencia_caminata/W-21.png');
@@ -56,51 +59,89 @@ class Character extends MoveableObject {
     }
 
     animate() {
+        this.checkMovements();
+        this.checkStatus();
+    };
 
+    /**
+     * checks all movements
+     */
+    checkMovements() {
         setInterval(() => {
-
-            if (this.isAboveGround() || this.speedY > 0) {
-                this.playAnimation(this.IMAGES_JUMPING)
-            } else
-                this.walking_sound.pause();
-            if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
-                this.moveRight();
-                this.walking_sound.play();
-                this.otherDirection = false;
-            }
-            if (this.world.keyboard.LEFT && this.x > 0) {
-                this.moveLeft();
-                this.walking_sound.play();
-                this.otherDirection = true;
-            }
-            if (this.world.keyboard.SPACE && !this.isAboveGround()) {
-                this.jump();
-
-            }
-            if (this.world.keyboard.D) {
-                this.throw();
-
-            }
-
-
+            this.checkIsJumping();
+            this.setBorderRight();
+            this.setBorderLeft();
+            this.isJumping();
+            this.isThrowing();
             this.world.camera_x = -this.x + 100;
         }, 1000 / 60);
+    };
 
+    /**
+     * checks all status
+     */
+    checkStatus() {
         setInterval(() => {
             if (this.isDead()) {
                 this.playAnimation(this.IMAGES_DEATH);
-            }else if (this.isHurt()) {
+            } else if (this.isHurt()) {
                 this.playAnimation(this.IMAGES_HURT);
+                this.hurt_character.play();
             }
             else if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
                 this.playAnimation(this.IMAGES_WALKING);
             }
         }, 40);
+    };
 
+   /**
+    * checks if charcter is jumping
+    */
+    checkIsJumping() {
+        if (this.isAboveGround() || this.speedY > 0) {
+            this.playAnimation(this.IMAGES_JUMPING);
+        } else
+            this.walking_sound.pause();
+    };
 
-    }
+    /**
+     * set the right border of the game
+     */
+    setBorderRight() {
+        if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
+            this.moveRight();
+            this.walking_sound.play();
+            this.otherDirection = false;
+        };
+    };
 
+    /**
+     * set the left border of the game
+     */
+    setBorderLeft() {
+        if (this.world.keyboard.LEFT && this.x > 0) {
+            this.moveLeft();
+            this.walking_sound.play();
+            this.otherDirection = true;
+        };
+    };
 
+    /**
+     * character jumps on keypress
+     */
+    isJumping() {
+        if (this.world.keyboard.SPACE && !this.isAboveGround()) {
+            this.jump();
+            this.jump_sound.play();
+        };
+    };
 
-
-}
+    /**
+     * character throws bottle on keypress
+     */
+    isThrowing() {
+        if (this.world.keyboard.D) {
+            this.throw();
+        };
+    };
+};

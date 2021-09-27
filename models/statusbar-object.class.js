@@ -41,7 +41,6 @@ class StatusBarObject extends DrawableObject {
         'img/7.Marcadores/Barra/Marcador vida/verde/100_.png',
     ];
 
-
     percentage;
     image = [];
 
@@ -54,9 +53,13 @@ class StatusBarObject extends DrawableObject {
         this.width = 150;
         this.height = 40;
         this.setPercentage(percent);
+    };
 
-    }
-
+    /**
+     * 
+     * @param {integer} i is the number for single imageArrays  
+     * @returns the imageArray choosen be Initalisation of the different statusbar objects
+     */
     setImageArray(i) {
         console.log(i);
         if (i == 1) {
@@ -71,17 +74,22 @@ class StatusBarObject extends DrawableObject {
         else if (i == 4) {
             return this.IMAGES4
         }
+    };
 
-    }
-
-
+    /**
+     * 
+     * @param {integer} percentage 
+     */
     setPercentage(percentage) {
         this.percentage = percentage;
         let path = this.image[this.resolveImageIndex()];
         this.img = this.imageCache[path];
-    }
+    };
 
-
+    /**
+     * 
+     * @returns the index for the different images in an image array
+     */
     resolveImageIndex() {
 
         if (this.percentage == 100) {
@@ -99,5 +107,5 @@ class StatusBarObject extends DrawableObject {
         }
         else
          return 0;
-    }
+    };
 }

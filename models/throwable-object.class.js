@@ -26,11 +26,11 @@ class ThrowableObject extends MoveableObject {
         this.width = 50;
         this.height = 60;
         this.throw();
+    };
 
-    }
-
-
-
+    /**
+     * let an object be throwable
+     */
     throw() {
         this.speedY = 30;
         this.applyGravity();
@@ -40,6 +40,5 @@ class ThrowableObject extends MoveableObject {
         setInterval(() => {
             this.playAnimation(this.IMAGES_THROWN);
         }, 100);
-    }
-
+    };
 }

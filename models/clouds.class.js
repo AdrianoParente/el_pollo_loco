@@ -8,10 +8,14 @@ class Clouds extends MoveableObject {
     super().loadImage('img/5.Fondo/Capas/4.nubes/1.png')
     this.x = x;
     this.animate();
-  }
+  };
+
+  /**
+   * let the clouds move left
+   */
   animate() {
     setInterval(() => {
       this.moveLeft();
     }, 50);
-  }
+  };
 }

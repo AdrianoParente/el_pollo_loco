@@ -3,18 +3,30 @@ let world;
 let keyboard = new Keyboard();
 let isFullscreen = false;
 
+/**
+ * initialize a new world
+ */
 function init() {
     canvas = document.getElementById('canvas');
     world = new World(canvas, keyboard);
 }
 
+/**
+ * calls function init and change display from start screen to canvas; displays new control buttons
+ */
 function start() {
-    document.getElementById('startScreen').style.display = 'none';
     init();
+    document.getElementById('startScreen').style.display = 'none';
     document.getElementById('canvas').style.display = 'flex';
+    document.getElementById('fullscreen').style.display = 'flex';
+    document.getElementById('control').style.display = 'flex';
+    document.getElementById('tryAgain').style.display = 'flex';
+    document.getElementById('start').style.display = 'none';
+};
 
-}
-
+/**
+ * change to fullscreen mode
+ */
 function showFullScreen() {
     if (isFullscreen == false) {
         canvas.requestFullscreen();
@@ -23,11 +35,14 @@ function showFullScreen() {
         document.exitFullscreen();
         isFullscreen = false;
     }
-}
+};
 
+/**
+ * enable and disable control advice panel
+ */
 function showControl() {
-    document.getElementById('controlElements').style.display = 'flex';
-}
+    document.querySelector('.d-none').classList.toggle('d-flex');
+};
 
 window.addEventListener('keydown', (e) => {
     if (e.keyCode == 39) {
